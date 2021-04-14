@@ -26,14 +26,15 @@ public class User {
 	@Min(1000000000)
 	@Max(9999999999L)
 	private long mobileNumber;
-	private Date dob;
+	private Date dobDate;
 	
-	public Date getDob() {
-		return dob;
+
+	public Date getDobDate() {
+		return dobDate;
 	}
 
-	public void setDob(Date dob) {
-		this.dob = dob;
+	public void setDobDate(Date dobDate) {
+		this.dobDate = dobDate;
 	}
 
 	public String getEmail() {
