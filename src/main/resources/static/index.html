@@ -1,74 +1,80 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<script type="text/javascript">
-	function sendData(){
-		function success(response){
-			console.log(response);
-		}
-		function errorHandler(error){
-			console.log(error);
-		}
-		const userform=document.getElementById('userform');
-		if (!userform.checkValidity()){
-			alert('Form is invalid');
-			return;
-		}
-		const promise=fetch('/user',{
-		method:'POST',
-		headers:{
-			'Content-Type':'application/json'
-		},
-		body:JSON.stringify({
-			name:document.getElementById('username').value,
-			email:document.getElementById('email').value,
-			mobileNumber:document.getElementById('mobileNumber').value,
-			dobDate:document.getElementById('dob').value			
-		})
-		});
-		promise.then(success);
-		promise.then(function(data){
-			console.log(data);
-		});
-		promise.catch(errorHandler);
-	}
-	function getUsers(){
-		const promise=fetch('/user');
-		promise.then(function(response){
-			return response.json();
-		})
-		.then(function(users){
-			console.log(users);
-			const table=document.getElementById('usersTable');
-			table.innerHTML="";
-			for(let index=0;index<users.length;index++){
-				console.log(users[index]);
-				const currentUser=users[index];
-				const row=document.createElement('tr');
-				const nameColumn=document.createElement('td');
-				const emailColumn=document.createElement('td');
-				const mobileNumberColumn=document.createElement('td');
-				const dobColumn=document.createElement('td');
-				nameColumn.append(currentUser.name);
-				emailColumn.append(currentUser.email);
-				mobileNumberColumn.append(currentUser.mobileNumber);
-				dobColumn.append(currentUser.dobDate);
-				row.appendChild(nameColumn);
-				row.appendChild(emailColumn);
-				row.appendChild(mobileNumberColumn);
-				row.appendChild(dobColumn);
-				table.appendChild(row);
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		function sendData() {
+			function success(response) {
+				if (!response.ok) {
+					alert("DOB cannot be future date");
+					return;
+				}
+				console.log(response);
 			}
-		})
-	}
-</script>
+			function errorHandler(error) {
+				console.log(error);
+			}
+			const userform = document.getElementById('userform');
+			if (!userform.checkValidity()) {
+				alert('Form is invalid');
+				return;
+			}
+			const promise = fetch('/user', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name: document.getElementById('username').value,
+					email: document.getElementById('email').value,
+					mobileNumber: document.getElementById('mobileNumber').value,
+					dobDate: document.getElementById('dob').value
+				})
+			});
+			promise.then(success);
+			promise.then(function (data) {
+				console.log(data);
+			});
+			promise.catch(errorHandler);
+		}
+		function getUsers() {
+			const promise = fetch('/user');
+			promise.then(function (response) {
+				return response.json();
+			})
+				.then(function (users) {
+					console.log(users);
+					const table = document.getElementById('usersTable');
+					table.innerHTML = "";
+					for (let index = 0; index < users.length; index++) {
+						console.log(users[index]);
+						const currentUser = users[index];
+						const row = document.createElement('tr');
+						const nameColumn = document.createElement('td');
+						const emailColumn = document.createElement('td');
+						const mobileNumberColumn = document.createElement('td');
+						const dobColumn = document.createElement('td');
+						nameColumn.append(currentUser.name);
+						emailColumn.append(currentUser.email);
+						mobileNumberColumn.append(currentUser.mobileNumber);
+						dobColumn.append(currentUser.dobDate);
+						row.appendChild(nameColumn);
+						row.appendChild(emailColumn);
+						row.appendChild(mobileNumberColumn);
+						row.appendChild(dobColumn);
+						table.appendChild(row);
+					}
+				})
+		}
+	</script>
 </head>
+
 <body>
 	<form id='userform'>
-		<div><input placeholder="Name" id='username'  value="Abhishek" required></div>
-		<div><input type="email" placeholder="Email" value="abhi@gmail.com" id='email' required></div> 
+		<div><input placeholder="Name" id='username' value="Abhishek" required></div>
+		<div><input type="email" placeholder="Email" value="abhi@gmail.com" id='email' required></div>
 		<div><input type="tel" placeholder="Mobile Number" value="9827473395" id='mobileNumber' required></div>
 		<div><input type="date" placeholder="DOB" id="dob"></div>
 	</form>
@@ -85,4 +91,5 @@
 		</tbody>
 	</table>
 </body>
+
 </html>
